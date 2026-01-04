@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --background: 20 25% 8%;
+    --foreground: 35 30% 90%;
+
+    --card: 20 20% 12%;
+    --card-foreground: 35 30% 90%;
+
+    --popover: 20 20% 12%;
+    --popover-foreground: 35 30% 90%;
+
+    --primary: 350 60% 65%;
+    --primary-foreground: 20 25% 8%;
+
+    --secondary: 35 40% 85%;
+    --secondary-foreground: 20 25% 15%;
+
+    --muted: 20 15% 20%;
+    --muted-foreground: 35 20% 60%;
+
+    --accent: 25 70% 60%;
+    --accent-foreground: 20 25% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 20 20% 20%;
+    --input: 20 20% 20%;
+    --ring: 350 60% 65%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors */
+    --rose-gold: 350 60% 65%;
+    --cream: 35 40% 90%;
+    --burgundy: 350 45% 25%;
+    --warm-white: 35 30% 95%;
+    --envelope: 35 35% 75%;
+    --envelope-dark: 25 30% 55%;
+    --letter-bg: 40 30% 94%;
+
+    /* Gradients */
+    --gradient-rose: linear-gradient(135deg, hsl(350 60% 65%), hsl(340 50% 55%));
+    --gradient-warm: linear-gradient(180deg, hsl(20 25% 8%), hsl(20 20% 12%));
+    --gradient-envelope: linear-gradient(180deg, hsl(35 35% 75%), hsl(25 30% 65%));
+
+    /* Shadows */
+    --shadow-glow: 0 0 60px hsl(350 60% 65% / 0.3);
+    --shadow-soft: 0 20px 60px -15px hsl(0 0% 0% / 0.5);
+  }
+
+  .dark {
+    --background: 20 25% 8%;
+    --foreground: 35 30% 90%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+@layer components {
+  .envelope-container {
+    perspective: 1000px;
+  }
+
+  .envelope {
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .envelope-flap {
+    transform-origin: top center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .envelope-flap.open {
+    transform: rotateX(180deg);
+  }
+
+  .letter {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s,
+                opacity 0.5s ease 0.3s;
+  }
+
+  .letter.revealed {
+    transform: translateY(-120%);
+  }
+
+  .floating-heart {
+    animation: float-up 4s ease-out forwards;
+  }
+
+  @keyframes float-up {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(0) rotate(0deg);
+    }
+    20% {
+      opacity: 1;
+      transform: translateY(-20px) scale(1) rotate(10deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-300px) scale(0.5) rotate(-20deg);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 30px hsl(350 60% 65% / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 60px hsl(350 60% 65% / 0.5);
+    }
+  }
+
+  @keyframes gentle-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-gentle-float {
+    animation: gentle-float 3s ease-in-out infinite;
+  }
+
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--foreground)) 0%,
+      hsl(var(--primary)) 50%,
+      hsl(var(--foreground)) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+
+  .confetti {
+    position: fixed;
+    pointer-events: none;
+    animation: confetti-fall 3s ease-out forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100vh) rotate(720deg);
+    }
+  }
+}
